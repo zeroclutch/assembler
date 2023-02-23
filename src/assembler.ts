@@ -7,8 +7,8 @@ type Operation = {
 }
 
 export const Operations: {[key: string]: Operation } = {
-    'LOAD': { opcode: 0b000, type: 'R' },
-    'MOVE': { opcode: 0b001, type: 'R' },
+    'LW':  { opcode: 0b000, type: 'R' },
+    'SW':  { opcode: 0b001, type: 'R' },
     'SUB':  { opcode: 0b010, type: 'R' },
     'ADD':  { opcode: 0b011, type: 'R' },
     'DISP': { opcode: 0b100, type: 'R' },
@@ -55,7 +55,9 @@ const assert = (condition: boolean, message: string) => {
 
 
 function getMachineCode(i: Instruction): number {
-    let code = i.operation;
+    let code = 0
+    //code <<= 1;
+    code |= i.operation;
     code <<= OPCODE_LENGTH;
     code |= i.rd;
     code <<= REGISTER_LENGTH;
@@ -77,7 +79,7 @@ export function assemble(assembly: string): string {
         const i = new Instruction(index + 1, ...tokens);
 
         const machineCode = getMachineCode(i);
-        result += `${machineCode.toString(16)} // ${line}<br>`
+        result += `${machineCode.toString(16).padStart(4, '0')} // ${line}<br>`
     })
     return result
 }

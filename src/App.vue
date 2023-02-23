@@ -21,7 +21,11 @@ import { Operations } from "./assembler";
     <p>
       <b>Supported instructions:</b>
       <br />
-      <code>{{ Object.keys(Operations).join(', ') }}</code>
+      <code>{{
+        Object.entries(Operations)
+          .map(([key, value]) => `${key}=${value.opcode}`)
+          .join(", ")
+      }}</code>
     </p>
   </footer>
 </template>
