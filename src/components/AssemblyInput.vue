@@ -3,9 +3,11 @@
 import { computed, ref } from "vue";
 import { assemble } from "../assembler";
 
+const INITIAL_CODE = `add r0 r1 r2; // r0 = r1 + r2`
+
 export default {
   setup() {
-    const assemblyInput = ref("add r0 r1 r2");
+    const assemblyInput = ref(INITIAL_CODE);
 
     const assembledCode = computed(() => {
       let result: string;
@@ -34,6 +36,15 @@ export default {
       lastAssembledCode,
     };
   },
+
+  methods: {
+    copy() {
+      if(!navigator.clipboard) return;
+      let el = document.querySelector(".assembly-output")
+      if(!el) return;
+      navigator.clipboard.writeText(el.textContent ?? '');
+    },
+  },
 };
 </script>
 
@@ -49,7 +60,7 @@ export default {
       ></textarea>
     </div>
     <div class="column">
-      <h6>INSTRUCTIONS.MEM</h6>
+      <h6>INSTRUCTIONS.MEM <a @click="copy()">COPY</a></h6>
       <code class="assembly-output" v-html="currentAssembledCode()"></code>
       <aside
         class="error-message"
@@ -100,9 +111,15 @@ h6 {
 .assembly-output {
   display: block;
   padding: 1rem;
+  max-height: 400px;
+  overflow: scroll;
 }
 
 .error-message {
   padding-left: 1rem;
+}
+
+a {
+  cursor: pointer;
 }
 </style>

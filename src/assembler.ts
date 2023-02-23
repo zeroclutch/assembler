@@ -73,13 +73,22 @@ export function assemble(assembly: string): string {
     assembly.split('\n').forEach((line, index) => {
         if(line === '') return;
 
-        const tokens = line.split(' ')
+        let comment = '';
+        if(line.indexOf('//') !== -1) {
+            comment = line.slice(line.indexOf('//') , line.length).replace('//', '');
+            line = line.slice(0, line.indexOf('//'));
+        }
+
+        line = line.trim();
+        
+        const tokens = line.split(/\s+/)
+
         
         assert (tokens.length === Instruction.LENGTH, `Invalid instruction format at line ${index + 1}: ${line}`);
         const i = new Instruction(index + 1, ...tokens);
 
         const machineCode = getMachineCode(i);
-        result += `${machineCode.toString(16).padStart(4, '0')} // ${line}<br>`
+        result += `${machineCode.toString(16).padStart(4, '0')} // ${line}${comment}<br>`
     })
     return result
 }
