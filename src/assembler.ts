@@ -38,9 +38,9 @@ class Instruction {
         this.r1 = parseInt(args[2].replace(/\D/g, ''));
         this.r2 = parseInt(args[3].replace(/\D/g, ''));
 
-        assert(this.rd <= (2 ** (REGISTER_LENGTH - 1)), `Destination register out of range at line ${line}: ${this.rd}`);
-        assert(this.r1 <= (2 ** (REGISTER_LENGTH - 1)), `r1 register out of range at line ${line}: ${this.r1}`);
-        assert(this.r2 <= (2 ** (REGISTER_LENGTH - 1)), `r2 register out of range at line ${line}: ${this.r2}`);
+        assert(this.rd < (2 ** (REGISTER_LENGTH - 1)), `Destination register out of range at line ${line}: ${this.rd}`);
+        assert(this.r1 < (2 ** (REGISTER_LENGTH - 1)), `r1 register out of range at line ${line}: ${this.r1}`);
+        assert(this.r2 < (2 ** (REGISTER_LENGTH - 1)), `r2 register out of range at line ${line}: ${this.r2}`);
 
     }
 
