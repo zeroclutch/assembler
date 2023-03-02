@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-type OperationType = 'R' | 'I';
+type OperationType = 'R' | 'I' | 'B';
 
 type Operation = {
     type: OperationType;
@@ -7,14 +7,17 @@ type Operation = {
 }
 
 export const Operations: {[key: string]: Operation } = {
-    'LW':  { opcode: 0b000, type: 'R' },
-    'SW':  { opcode: 0b001, type: 'R' },
-    'SUB':  { opcode: 0b010, type: 'R' },
-    'ADD':  { opcode: 0b011, type: 'R' },
-    'DISP': { opcode: 0b100, type: 'R' },
-    'HALT': { opcode: 0b101, type: 'R' },
-    'SUBI': { opcode: 0b110, type: 'I' },
-    'ADDI': { opcode: 0b111, type: 'I' },
+    'LW':  { opcode: 0b0000, type: 'R' },
+    'MV':  { opcode: 0b0001, type: 'R' },
+    'SUB':  { opcode: 0b0010, type: 'R' },
+    'ADD':  { opcode: 0b0011, type: 'R' },
+    'DISP': { opcode: 0b0100, type: 'R' },
+    'HALT': { opcode: 0b0101, type: 'R' },
+    'SUBI': { opcode: 0b0110, type: 'I' },
+    'ADDI': { opcode: 0b0111, type: 'I' },
+    'SW':   { opcode: 0b1000, type: 'R' },
+    'BZ':   { opcode: 0b1001, type: 'B' },
+    'BNZ':  { opcode: 0b1010, type: 'B' },
 };
 
 const OPCODE_LENGTH = 4;
